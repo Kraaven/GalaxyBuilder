@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
+using Random = UnityEngine.Random;
+
 
 public class GenerateSplines : MonoBehaviour
 {
@@ -25,24 +27,31 @@ public class GenerateSplines : MonoBehaviour
     {
         for (int i = 0; i < layers; i++)
         {
-            orbits.Add(Instantiate(OrbitPrefab,transform.position,Quaternion.identity));
-            orbits[i].transform.parent = gameObject.transform;
-            
-            Spline Orbit = orbits[i].GetComponent<SplineContainer>().AddSpline();
-            float offset = i*density + innerR;
-            var numPoints = 8;
-            Orbit.Closed = true;
-            for (int j = 0; j < numPoints; j++)
-            {
-                float angle = (float)j / numPoints * 2 * Mathf.PI; // Calculate angle in radians
-                var x = offset * Mathf.Cos(angle); // Calculate x coordinate
-                var z = offset * Mathf.Sin(angle); // Calculate z coordinate
-                Orbit.Add(new BezierKnot(new float3(x, 0, z)), TangentMode.AutoSmooth);
-            }
+            int NumOrbits = Random.Range(((int)i / 10)+1, (int)i / 7);
 
-            //orbits[i].transform.localScale = new Vector3(1, 1, 1.2f);
-            orbits[i].GetComponent<CreateSatalites>().angleTilt = i * angleTilt;
-            orbits[i].GetComponent<CreateSatalites>().Create();
+            for (int m = 0; m < NumOrbits; m++)
+            {
+                Debug.Log("Orbit Size: "+ i);
+                orbits.Add(Instantiate(OrbitPrefab,transform.position,Quaternion.identity));
+                orbits[i+m].transform.parent = gameObject.transform;
+            
+                Spline Orbit = orbits[i+m].GetComponent<SplineContainer>().AddSpline();
+                float offset = i*density + innerR;
+                var numPoints = 8;
+                Orbit.Closed = true;
+                for (int j = 0; j < numPoints; j++)
+                {
+                    float angle = (float)j / numPoints * 2 * Mathf.PI; // Calculate angle in radians
+                    var x = offset * Mathf.Cos(angle); // Calculate x coordinate
+                    var z = offset * Mathf.Sin(angle); // Calculate z coordinate
+                    Orbit.Add(new BezierKnot(new float3(x, 0, z)), TangentMode.AutoSmooth);
+                }
+
+                //orbits[i].transform.localScale = new Vector3(1, 1, 1.2f);
+                orbits[i+m].GetComponent<CreateSatalites>().angleTilt = i * angleTilt;
+                orbits[i+m].GetComponent<CreateSatalites>().Create(i);
+            }
+            
             
 
 
