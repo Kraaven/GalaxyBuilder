@@ -40,8 +40,11 @@ public class GenerateSplines : MonoBehaviour
                 Orbit.Add(new BezierKnot(new float3(x, 0, z)), TangentMode.AutoSmooth);
             }
 
-            orbits[i].transform.localScale = new Vector3(1, 1, 1.2f);
-            orbits[i].transform.Rotate(0,i*angleTilt,0);
+            //orbits[i].transform.localScale = new Vector3(1, 1, 1.2f);
+            orbits[i].GetComponent<CreateSatalites>().angleTilt = i * angleTilt;
+            orbits[i].GetComponent<CreateSatalites>().Create();
+            
+
 
             yield return new WaitForSeconds(0.01f);
 
