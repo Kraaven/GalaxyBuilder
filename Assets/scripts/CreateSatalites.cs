@@ -27,20 +27,23 @@ public class CreateSatalites : MonoBehaviour
         transform.Rotate(Random.Range(-3f,3f),angleTilt,Random.Range(-3f,3f));
         transform.localScale = new Vector3(1, 1, 1.2f);
 
+        StarMat.enableInstancing = true;
         Ellipse = GetComponent<SplineContainer>().Splines[0];
 
         int anchorNum = Random.Range((int)size/2, 3*size);
         for (int i = 0; i < anchorNum; i++)
         {
-
+            //Create the Cube
             GameObject anchor = GameObject.CreatePrimitive(PrimitiveType.Cube);
             anchor.GetComponent<MeshRenderer>().material = StarMat;
 
+            //Set Cube configurations
             var anchorT = anchor.transform;
             anchorT.parent = gameObject.transform;
             anchorT.localScale = new Vector3(0.05f, 0.05f, 0.05f);
             anchorT.Rotate(Random.Range(0,360),Random.Range(0,360),Random.Range(0,360));
             
+            //Find Cube position and set it
             float spawnPoint = Random.Range(0, 1f);
             Vector3 splinePos = Ellipse.EvaluatePosition(spawnPoint);
             anchor.transform.position = transform.TransformPoint(splinePos);
@@ -61,6 +64,7 @@ public class CreateSatalites : MonoBehaviour
         
     }
 
+    //Move the Cubes to their new positions
     IEnumerator Revolve()
     {
         float offset = 0.05f/(Size*Size);
