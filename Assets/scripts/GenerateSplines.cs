@@ -16,6 +16,8 @@ public class GenerateSplines : MonoBehaviour
     public List<GameObject> orbits;
     public float angleTilt;
 
+    public float SpinSpeed;
+
     public void Start()
     {
         orbits = new List<GameObject>();
@@ -70,6 +72,12 @@ public class GenerateSplines : MonoBehaviour
 
         } 
     }
-    
-    
+
+    private void FixedUpdate()
+    {
+        foreach (var orbit in orbits)
+        {
+            orbit.GetComponent<CreateSatalites>().speed = SpinSpeed;
+        }
+    }
 }
