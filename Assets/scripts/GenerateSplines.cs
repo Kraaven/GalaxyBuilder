@@ -15,12 +15,15 @@ public class GenerateSplines : MonoBehaviour
     public GameObject OrbitPrefab;
     public List<GameObject> orbits;
     public float angleTilt;
+    public GameObject Pivot;
 
     public float SpinSpeed;
 
     public void Start()
     {
         orbits = new List<GameObject>();
+        Pivot.GetComponent<temp>().enabled = false;
+        Pivot.transform.GetChild(0).GetComponent<CameraController>().enabled = false;
         StartCoroutine(CreateOrbits());
 
     }
@@ -61,6 +64,7 @@ public class GenerateSplines : MonoBehaviour
                 //orbits[i].transform.localScale = new Vector3(1, 1, 1.2f);
                 Line.GetComponent<CreateSatalites>().angleTilt = i * angleTilt;
                 Line.GetComponent<CreateSatalites>().Create(i);
+                Line.GetComponent<CreateSatalites>().speed = SpinSpeed;
             }
                 
             
@@ -68,16 +72,12 @@ public class GenerateSplines : MonoBehaviour
             
 
 
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.07f);
 
-        } 
-    }
-
-    private void FixedUpdate()
-    {
-        foreach (var orbit in orbits)
-        {
-            orbit.GetComponent<CreateSatalites>().speed = SpinSpeed;
         }
+
+        Pivot.GetComponent<temp>().enabled = true;
+        Pivot.transform.GetChild(0).GetComponent<CameraController>().enabled = true;
     }
+    
 }
