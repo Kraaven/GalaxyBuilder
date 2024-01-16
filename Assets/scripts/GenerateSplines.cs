@@ -28,14 +28,23 @@ public class GenerateSplines : MonoBehaviour
         for (int i = 0; i < layers; i++)
         {
             int NumOrbits = Random.Range(((int)i / 10)+1, (int)i / 7);
+            if (i < 40)
+            {
+                NumOrbits++;
+            }
 
+            if (i<15)
+            {
+                NumOrbits+= 2;
+            }
             for (int m = 0; m < NumOrbits; m++)
             {
                 Debug.Log("Orbit Size: "+ i);
-                orbits.Add(Instantiate(OrbitPrefab,transform.position,Quaternion.identity));
-                orbits[i+m].transform.parent = gameObject.transform;
+                GameObject Line = Instantiate(OrbitPrefab, transform.position, Quaternion.identity);
+                orbits.Add(Line);
+                Line.transform.parent = gameObject.transform;
             
-                Spline Orbit = orbits[i+m].GetComponent<SplineContainer>().AddSpline();
+                Spline Orbit = Line.GetComponent<SplineContainer>().AddSpline();
                 float offset = i*density + innerR;
                 var numPoints = 8;
                 Orbit.Closed = true;
@@ -48,9 +57,11 @@ public class GenerateSplines : MonoBehaviour
                 }
 
                 //orbits[i].transform.localScale = new Vector3(1, 1, 1.2f);
-                orbits[i+m].GetComponent<CreateSatalites>().angleTilt = i * angleTilt;
-                orbits[i+m].GetComponent<CreateSatalites>().Create(i);
+                Line.GetComponent<CreateSatalites>().angleTilt = i * angleTilt;
+                Line.GetComponent<CreateSatalites>().Create(i);
             }
+                
+            
             
             
 

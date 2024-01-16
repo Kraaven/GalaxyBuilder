@@ -74,5 +74,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angleTilt: 0
+  Size: 0
+  StarMat: {fileID: 2100000, guid: af5b930542bafe9498f5f76684ccd63b, type: 2}
   AnchorPrefab: {fileID: 6561821663700122478, guid: f07e567010f90e54e8654feb2babe359,
     type: 3}
+  anchors: []
+  Location: []
