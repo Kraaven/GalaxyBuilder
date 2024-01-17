@@ -7,7 +7,6 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     
-    private float rot;
     public GameObject pivot;
     
     // Sensitivity for mouse rotation
@@ -26,15 +25,7 @@ public class CameraController : MonoBehaviour
 
     public void Update()
     {
-        rot += 0.01f;
-        if (rot > 100)
-        {
-            rot = 0;
-        }
-        
-        RenderSettings.skybox.SetFloat("_Rotation",rot);
-        
-        
+
         // Check for right mouse button press and release
         if (Input.GetMouseButtonDown(0))
         {

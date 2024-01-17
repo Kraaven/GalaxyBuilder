@@ -19,11 +19,9 @@ public class GenerateSplines : MonoBehaviour
 
     public float SpinSpeed;
 
-    public void Start()
+    public void StartGen()
     {
         orbits = new List<GameObject>();
-        Pivot.GetComponent<temp>().enabled = false;
-        Pivot.transform.GetChild(0).GetComponent<CameraController>().enabled = false;
         StartCoroutine(CreateOrbits());
 
     }
